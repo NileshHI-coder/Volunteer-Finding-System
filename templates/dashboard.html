@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <!-- Header -->
+        <div class="card shadow-lg border-0 mb-4">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                <h2 class="mb-0">Dashboard</h2>
+                <p class="mb-0 opacity-75">Manage requests, volunteers & AI matches</p>
+            </div>
+        </div>
+
+        <!-- Requests -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h4 class="text-primary mb-3">Requests</h4>
+                <div id="requestsList" class="row g-3"></div>
+            </div>
+        </div>
+
+        <!-- Volunteers -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h4 class="text-success mb-3">Volunteers</h4>
+                <div id="volunteersList" class="row g-3"></div>
+            </div>
+        </div>
+
+        <!-- Matches -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h4 class="text-warning mb-3">AI Matches</h4>
+                <div id="matchesList" class="row g-3"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

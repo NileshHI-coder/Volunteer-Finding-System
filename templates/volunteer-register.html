@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white text-center py-4">
+                <i class="fas fa-user-plus fa-2x mb-2"></i>
+                <h2 class="mb-0">Join as Volunteer</h2>
+                <p class="mb-0 opacity-75">Help your community with your skills!</p>
+            </div>
+            <div class="card-body p-5">
+                <form id="volunteerForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Location *</label>
+                            <input type="text" class="form-control" id="location" placeholder="City, Neighborhood" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Skills (comma separated) *</label>
+                        <input type="text" class="form-control" id="skills" 
+                               placeholder="e.g., grocery shopping, tech support, driving, childcare" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Availability</label>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="weekdays">
+                                    <label class="form-check-label" for="weekdays">Weekdays</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="weekends">
+                                    <label class="form-check-label" for="weekends">Weekends</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="evenings">
+                                    <label class="form-check-label" for="evenings">Evenings</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        <i class="fas fa-check me-2"></i>
+                        Register as Volunteer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('volunteerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const availability = [];
+    if (document.getElementById('weekdays').checked) availability.push('Weekdays');
+    if (document.getElementById('weekends').checked) availability.push('Weekends');
+    if (document.getElementById('evenings').checked) availability.push('Evenings');
+    
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        location: document.getElementById('location').value,
+        skills: document.getElementById('skills').value,
+        availability: availability.join(', ') || 'Flexible'
+    };
+    
+    try {
+        showLoading();
+        const response = await fetch('/api/volunteer-register', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            showAlert('success', 'Welcome aboard! You are now a registered volunteer. ID: ' + result.volunteer_id);
+            document.getElementById('volunteerForm').reset();
+        }
+    } catch (error) {
+        showAlert('error', 'Error registering: ' + error.message);
+    } finally {
+        hideLoading();
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <i class="fas fa-hand-holding-heart fa-2x mb-2"></i>
+                <h2 class="mb-0">Request Help</h2>
+            </div>
+            <div class="card-body p-5">
+                <form id="requestForm">
+                    <input type="hidden" id="requestId" value="">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Location *</label>
+                            <input type="text" class="form-control" id="location" placeholder="City, Neighborhood" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Type of Help *</label>
+                        <select class="form-select" id="type" required>
+                            <option value="">Select type...</option>
+                            <option value="Grocery">Grocery Shopping</option>
+                            <option value="Medical">Medical Transport</option>
+                            <option value="Repair">Home Repair</option>
+                            <option value="Tech">Tech Support</option>
+                            <option value="Childcare">Childcare</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description *</label>
+                        <textarea class="form-control" id="description" rows="4" placeholder="Describe your situation..." required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Urgency Level *</label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="urgency" id="low" value="Low" required>
+                                <label class="form-check-label" for="low">
+                                    <i class="fas fa-clock text-muted"></i> Low
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="urgency" id="medium" value="Medium" required>
+                                <label class="form-check-label" for="medium">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i> Medium
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="urgency" id="high" value="High" required>
+                                <label class="form-check-label" for="high">
+                                    <i class="fas fa-exclamation-circle text-danger"></i> High
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Submit Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('requestForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('name').value,
+        location: document.getElementById('location').value,
+        type: document.getElementById('type').value,
+        description: document.getElementById('description').value,
+        urgency: document.querySelector('input[name="urgency"]:checked').value
+    };
+    
+    try {
+        showLoading();
+        const response = await fetch('/api/submit-request', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            showAlert('success', 'Request submitted successfully! ID: ' + result.request_id);
+            document.getElementById('requestForm').reset();
+            document.getElementById('requestId').value = result.request_id;
+        }
+    } catch (error) {
+        showAlert('error', 'Error submitting request: ' + error.message);
+    } finally {
+        hideLoading();
+    }
+});
+</script>
+{% endblock %}

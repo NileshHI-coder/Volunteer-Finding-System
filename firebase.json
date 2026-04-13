@@ -1,0 +1,26 @@
+{
+  "hosting": {
+    "public": "templates",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "smart-volunteer-backend",
+          "region": "us-central1"
+        }
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": ".",
+      "codebase": "backend",
+      "runtime": "python310"
+    }
+  ]
+}

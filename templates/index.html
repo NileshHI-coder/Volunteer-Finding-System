@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row align-items-center min-vh-80">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold text-primary mb-4">
+            Connect <span class="text-warning">Helpers</span> with 
+            <span class="text-warning">Those in Need</span>
+        </h1>
+        <p class="lead mb-4">AI-powered matching system that connects volunteers with community members who need help. Fast, smart, and effective.</p>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <a href="/request-help" class="btn btn-primary btn-lg w-100">
+                    <i class="fas fa-hand-holding-heart me-2"></i>
+                    I Need Help
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="/volunteer-register" class="btn btn-outline-primary btn-lg w-100">
+                    <i class="fas fa-user-plus me-2"></i>
+                    I'm a Volunteer
+                </a>
+            </div>
+        </div>
+    </div>
+<div class="col-lg-6 text-center">
+    <div class="position-relative">
+        
+        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop"
+             class="img-fluid rounded-3 shadow-lg"
+             alt="Helping Community">
+
+        <!-- Overlay Text -->
+        <div class="position-absolute top-50 start-50 translate-middle text-white text-center">
+            <h3 class="fw-bold">Helping Communities 🤝</h3>
+            <p class="mb-0">AI-powered Volunteer Matching</p>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="text-center mb-5">How It Works</h2>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+        <div class="card border-0 h-100 shadow-sm">
+            <div class="card-body">
+                <i class="fas fa-edit fa-3x text-primary mb-3"></i>
+                <h5>1. Submit Request</h5>
+                <p class="text-muted">Tell us what help you need and where.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+        <div class="card border-0 h-100 shadow-sm">
+            <div class="card-body">
+                <i class="fas fa-brain fa-3x text-success mb-3"></i>
+                <h5>2. AI Matching</h5>
+                <p class="text-muted">Our AI finds the perfect volunteer match.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+        <div class="card border-0 h-100 shadow-sm">
+            <div class="card-body">
+                <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                <h5>3. Get Help</h5>
+                <p class="text-muted">Connect and receive help quickly.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
