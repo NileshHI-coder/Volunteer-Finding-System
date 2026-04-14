@@ -8,6 +8,8 @@ let currentMatches = [];
 // ================= INIT =================
 document.addEventListener('DOMContentLoaded', () => {
     loadRequests();
+    loadVolunteers();   
+    loadMatches();
 });
 
 // ================= LOAD =================
